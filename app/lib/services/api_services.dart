@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class ApiServices {
 
-  Future<TillModel?> getOrders() async {
+  static Future<TillModel?> getOrders() async {
     TillModel? result;
     try {
       final response = await http.get(
@@ -15,7 +15,6 @@ class ApiServices {
       if (response.statusCode == 200) {
         final item = json.decode(response.body);
         result = TillModel.fromMap(item);
-        print(result.orders[0].id);
       } 
       else {
         print("error");

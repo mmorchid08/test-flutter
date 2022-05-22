@@ -8,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,23 +28,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
-  void toto()async{
-    await ApiServices().getOrders();
-  }
+  
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-     toto();
-
-
   }
+
   @override
   Widget build(BuildContext context) {
-    //  toto();
-    return const Scaffold(backgroundColor: Colors.amber,);
-
+    return const Scaffold(
+      backgroundColor: Colors.amber,
+    );
   }
 }
