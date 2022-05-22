@@ -5,16 +5,16 @@ class OrderModel {
   final int id;
   final String table;
   final int guests;
-  final String data;
-  final List<OrderItermModel> iterms;
+  final String date;
+  final List<OrderItermModel> items;
 
   OrderModel({
     required this.object,
     required this.id,
     required this.table,
     required this.guests,
-    required this.data,
-    required this.iterms,
+    required this.date,
+    required this.items,
   });
 
   factory OrderModel.fromMap(Map<String, dynamic> json) {
@@ -23,12 +23,11 @@ class OrderModel {
       id: json["id"],
       table: json["table"],
       guests: json["guests"],
-      data: json["data"],
-      iterms: json["iterms"]
-          .map((iterm) => OrderItermModel.fromMap(iterm))
+      date: json["date"],
+      items: json["items"]
+          .map<OrderItermModel>((item) => OrderItermModel.fromMap(item))
           .toList(),
     );
 
-    // iterms =
   }
 }
