@@ -1,9 +1,13 @@
+import 'package:app/core/const/calculations_function.dart';
 import 'package:app/models/order_model.dart';
+import 'package:app/view_models/order_view_model.dart';
+import 'package:app/views/screens/details_order_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderCardWidget extends StatefulWidget {
-  OrderModel ordreDetail;
-  OrderCardWidget({Key? key, required this.ordreDetail}) : super(key: key);
+  int index;
+  OrderCardWidget({Key? key, required this.index}) : super(key: key);
 
   @override
   State<OrderCardWidget> createState() => _OrderCardWidgetState();
@@ -15,35 +19,22 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
   @override
   void initState() {
     super.initState();
-    converPrice = TotalPrice(widget.ordreDetail);
   }
-
-  List<String> TotalPrice(OrderModel ordreDetail) {
-    int totalPrice = 0;
-    String totalPriceStr;
-    List<String> converPrice = [];
-
-    for (var i = 0; i < ordreDetail.items.length; i++) {
-      totalPrice += ordreDetail.items[i].price;
-    }
-    totalPriceStr = totalPrice.toString();
-    converPrice.insert(0, totalPriceStr.substring(0, totalPriceStr.length - 2));
-    converPrice.insert(
-        1,
-        totalPriceStr.substring(
-            totalPriceStr.length - 2, totalPriceStr.length));
-
-    return converPrice;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
+    OrderModel order =
+        Provider.of<OrderViewModel>(context).tillModel!.orders[widget.index];
+    converPrice = TotalPrice(order);
+
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DetailsOrderScreen(index: widget.index))),
       child: Container(
         color: Colors.white,
         height: 100,
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -55,8 +46,8 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                   color: Colors.redAccent),
               child: Center(
                 child: Text(
-                  widget.ordreDetail.table,
-                  style: TextStyle(
+                  order.table,
+                  style:const  TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 26,
                       color: Colors.white),
@@ -65,7 +56,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,7 +74,8 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                                 width: 5,
                               ),
                               Text(
-                                widget.ordreDetail.guests.toString(),
+                                order.guests.toString(),
+                                // widget.ordre.guests.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 20.0),
@@ -91,9 +83,10 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                             ],
                           ),
                           Text(
-                            widget.ordreDetail.date.isEmpty
-                                ? "18:20"
-                                : widget.ordreDetail.date,
+                            order.date.isEmpty ? "18:20" : order.date,
+                            // widget.ordre.date.isEmpty
+                            //     ? "18:20"
+                            //     : widget.ordre.date,
                             style: TextStyle(fontSize: 20.0),
                           ),
                         ],
@@ -104,7 +97,7 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          converPrice[0] + ",",
+                          converPrice[0],
                           style: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
@@ -112,21 +105,13 @@ class _OrderCardWidgetState extends State<OrderCardWidget> {
                           ),
                         ),
                         Text(
-                          converPrice[1],
+                          "," + converPrice[1] + order.items[0].currency,
                           style: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.w200,
-                            color: Colors.grey[800],
+                            color: Colors.grey[500],
                           ),
                         ),
-                        Text(
-                          widget.ordreDetail.items[0].currency,
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.grey[800],
-                          ),
-                        )
                       ],
                     ),
                   ],

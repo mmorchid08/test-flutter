@@ -15,7 +15,7 @@ class AppBarHome extends StatelessWidget {
             titleText,
             style: TextStyle(
               fontWeight: FontWeight.normal,
-              color: Color(0xff6d7981),
+              color: Colors.grey[700],
             ),
           ),
         ),
