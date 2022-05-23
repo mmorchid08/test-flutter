@@ -2,15 +2,15 @@ import 'package:app/models/till_model.dart';
 import 'package:app/services/api_services.dart';
 import 'package:flutter/material.dart';
 
-enum OrderStatus { SUCCESS, FAILURE, LODING }
+enum OrderStatus { SUCCESS, FAILURE, LOADING }
 
 class OrderViewModel with ChangeNotifier {
-  OrderStatus orderStatus = OrderStatus.LODING;
+  OrderStatus orderStatus = OrderStatus.LOADING;
   TillModel? tillModel;
   String? errorMessage;
 
   void getApiData() async {
-    orderStatus = OrderStatus.LODING;
+    orderStatus = OrderStatus.LOADING;
     errorMessage = null;
     try {
       tillModel = await ApiServices.getOrders();
