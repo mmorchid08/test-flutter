@@ -36,24 +36,3 @@ String converPrice(int  price, String currency) {
     var hexColor = color.replaceAll("#", "");
     return int.parse("0xff" + hexColor);
   }
-
-
-// int countmeals(List<OrderItermModel>items){
-//   int i = 0;
-//   List<String> elment = [];
-//   Map<String, int> map = {}; 
-//   for (var i = 0; i < items.length;i++){
-//     elment.insert(i, items[i].name);
-//   }
-
-//   while(i < elment.length){
-//    if (map.isEmpty){
-//      map['name'] = 
-//    }
-//     i++;
-//   }
-  
-//   int counter;
-
-
-// }
